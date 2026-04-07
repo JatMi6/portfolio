@@ -35,12 +35,6 @@ const fadeUp: Variants = {
     filter: "blur(0px)",
     transition: { duration: 1.2, ease },
   },
-    whileInView: {
-        opacity: 1,
-        y: 0,
-        filter: "blur(0px)",
-        transition: { duration: 1.2, ease }
-    },
 };
 
 const staggerContainer: Variants = {
