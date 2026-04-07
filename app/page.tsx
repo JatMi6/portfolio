@@ -237,12 +237,12 @@ export default function Portfolio() {
     const heroRef = useRef<HTMLElement>(null);
 
     return (
-        <main className="bg-[#030303] min-h-screen text-zinc-400 font-sans selection:bg-zinc-200 selection:text-black overflow-x-hidden">
+        <main className="bg-black min-h-screen text-green-500 font-mono selection:bg-green-500 selection:text-black overflow-x-hidden">
 
-            {/* ─── HERO ──────────────────────────────────────────────────────── */}
+            {/* HERO */}
             <section
                 ref={heroRef}
-                className="relative min-h-screen flex flex-col justify-center px-6 md:px-20 pt-20 overflow-hidden bg-black"
+                className="relative min-h-screen flex flex-col justify-center px-4 sm:px-6 md:px-20 pt-16 sm:pt-20 overflow-hidden bg-black"
             >
                 {/* Brutalist grid background */}
                 <div className="absolute inset-0 opacity-10">
@@ -251,7 +251,7 @@ export default function Portfolio() {
                             linear-gradient(to right, #00ff00 1px, transparent 1px),
                             linear-gradient(to bottom, #00ff00 1px, transparent 1px)
                         `,
-                        backgroundSize: '50px 50px'
+                        backgroundSize: '30px 30px'
                     }} />
                 </div>
                 
@@ -260,10 +260,10 @@ export default function Portfolio() {
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
                 
                 {/* Terminal-style accent boxes */}
-                <div className="absolute top-10 left-10 border border-green-500 px-3 py-1 font-mono text-xs text-green-500 animate-pulse">
+                <div className="absolute top-4 sm:top-10 left-4 sm:left-10 border border-green-500 px-2 sm:px-3 py-1 font-mono text-xs text-green-500 animate-pulse">
                     $ ./init.sh
                 </div>
-                <div className="absolute bottom-10 right-10 border border-red-500 px-3 py-1 font-mono text-xs text-red-500">
+                <div className="absolute bottom-4 sm:bottom-10 right-4 sm:right-10 border border-red-500 px-2 sm:px-3 py-1 font-mono text-xs text-red-500">
                     STATUS: ONLINE
                 </div>
 
@@ -271,7 +271,7 @@ export default function Portfolio() {
                 <CursorSpotlight containerRef={heroRef as React.RefObject<HTMLElement>} />
 
                 {/* 3D sphere (right side) */}
-                <div className="absolute right-[-5%] top-[10%] w-[55vw] h-[55vw] pointer-events-none">
+                <div className="absolute right-[-10%] sm:right-[-5%] top-[10%] w-[70vw] sm:w-[55vw] h-[70vw] sm:h-[55vw] pointer-events-none">
                     <Hero3D />
                 </div>
 
@@ -281,17 +281,17 @@ export default function Portfolio() {
                     variants={staggerContainer}
                     className="max-w-6xl z-10"
                 >
-                    <motion.div variants={fadeUp} className="mb-8 flex items-center gap-4">
-                        <div className="h-[2px] w-12 bg-green-500 animate-pulse" />
-                        <span className="text-sm font-mono uppercase tracking-widest text-green-500 font-bold">
+                    <motion.div variants={fadeUp} className="mb-6 sm:mb-8 flex items-center gap-2 sm:gap-4">
+                        <div className="h-[1px] sm:h-[2px] w-8 sm:w-12 bg-green-500 animate-pulse" />
+                        <span className="text-xs sm:text-sm font-mono uppercase tracking-widest text-green-500 font-bold">
                             {heroData.subtitle}
                         </span>
-                        <div className="h-[2px] w-12 bg-green-500 animate-pulse" />
+                        <div className="h-[1px] sm:h-[2px] w-8 sm:w-12 bg-green-500 animate-pulse" />
                     </motion.div>
 
                     {/* Brutalist terminal heading */}
                     <motion.div variants={fadeUp}>
-                        <div className="font-mono text-[clamp(3rem,10vw,10rem)] font-black leading-none mb-8">
+                        <div className="font-mono text-[clamp(2rem,12vw,6rem)] sm:text-[clamp(3rem,10vw,10rem)] font-black leading-none mb-6 sm:mb-8">
                             <div className="text-red-500 animate-pulse" style={{ textShadow: '0 0 10px #ff0000' }}>BREAK</div>
                             <div className="text-green-500" style={{ textShadow: '0 0 10px #00ff00' }}>BUILD</div>
                             <div className="text-blue-500" style={{ textShadow: '0 0 10px #0000ff' }}>DEPLOY</div>
@@ -300,7 +300,7 @@ export default function Portfolio() {
 
                     <motion.p
                         variants={fadeUp}
-                        className="text-lg md:text-xl font-mono text-green-400 max-w-3xl mb-12 leading-relaxed border-l-4 border-green-500 pl-6"
+                        className="text-sm sm:text-lg md:text-xl font-mono text-green-400 max-w-3xl mb-8 sm:mb-12 leading-relaxed border-l-4 border-green-500 pl-4 sm:pl-6"
                         style={{ textShadow: '0 0 5px #00ff00' }}
                     >
                         {heroData.description}
@@ -310,11 +310,11 @@ export default function Portfolio() {
                     <motion.div variants={fadeUp}>
                         <MagneticButton
                             href={heroData.cta.href}
-                            className="group pointer-events-auto inline-flex items-center gap-4 border-2 border-green-500 bg-black text-green-500 px-8 py-4 font-mono font-bold tracking-widest transition-all duration-300 hover:bg-green-500 hover:text-black hover:shadow-[0_0_30px_rgba(0,255,0,0.5)] active:scale-[0.98]"
+                            className="group pointer-events-auto inline-flex items-center gap-3 sm:gap-4 border-2 border-green-500 bg-black text-green-500 px-6 sm:px-8 py-3 sm:py-4 font-mono font-bold tracking-widest text-sm sm:text-base transition-all duration-300 hover:bg-green-500 hover:text-black hover:shadow-[0_0_30px_rgba(0,255,0,0.5)] active:scale-[0.98]"
                         >
                             {heroData.cta.text}
                             <ArrowRight
-                                size={18}
+                                size={14}
                                 className="transform transition-transform group-hover:translate-x-1"
                             />
                         </MagneticButton>
@@ -324,58 +324,61 @@ export default function Portfolio() {
 
             {/* ─── ECOSYSTEM BAR ───────────────────────────────────────────────{/* SYSTEM_STACK BAR */}
             <section className="border-y-2 border-green-500 bg-black terminal-grid">
-                <div className="px-6 md:px-20 py-8 flex flex-wrap items-center justify-between gap-8 scanlines">
-                    <div className="flex items-center gap-3">
-                        <span className="text-red-500 font-mono text-sm">$</span>
-                        <span className="text-green-500 font-mono text-sm font-bold">SYSTEM.STACK</span>
-                        <span className="text-green-500 font-mono text-sm animate-pulse">_</span>
+                <div className="px-4 sm:px-6 md:px-20 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-8 scanlines">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <span className="text-red-500 font-mono text-xs sm:text-sm">$</span>
+                        <span className="text-green-500 font-mono text-xs sm:text-sm font-bold">SYSTEM.STACK</span>
+                        <span className="text-green-500 font-mono text-xs sm:text-sm animate-pulse">_</span>
                     </div>
-                    {skillsData.map((tech, i) => {
-                        const iconMap: Record<string, React.ReactNode> = {
-                            Layout: <Layout size={16} className="text-green-500" />,
-                            Code2: <Code2 size={16} className="text-green-500" />,
-                            Zap: <Zap size={16} className="text-green-500" />,
-                            Database: <Database size={16} className="text-green-500" />,
-                            Terminal: <Terminal size={16} className="text-green-500" />,
-                        };
-                        return (
-                            <div key={i} className="flex items-center gap-2 border border-green-500 px-3 py-1 font-mono text-xs text-green-500 transition-all duration-300 hover:bg-green-500 hover:text-black hover:shadow-[0_0_15px_rgba(0,255,0,0.5)]">
-                                {iconMap[tech.icon]}
-                                <span className="font-bold">{tech.name}</span>
-                            </div>
-                        );
-                    })}
+                    <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+                        {skillsData.map((tech, i) => {
+                            const iconMap: Record<string, React.ReactNode> = {
+                                Layout: <Layout size={14} className="text-green-500" />,
+                                Code2: <Code2 size={14} className="text-green-500" />,
+                                Zap: <Zap size={14} className="text-green-500" />,
+                                Database: <Database size={14} className="text-green-500" />,
+                                Terminal: <Terminal size={14} className="text-green-500" />,
+                            };
+                            return (
+                                <div key={i} className="flex items-center gap-1 sm:gap-2 border border-green-500 px-2 sm:px-3 py-1 font-mono text-xs text-green-500 transition-all duration-300 hover:bg-green-500 hover:text-black hover:shadow-[0_0_15px_rgba(0,255,0,0.5)]">
+                                    {iconMap[tech.icon]}
+                                    <span className="font-bold hidden sm:inline">{tech.name}</span>
+                                    <span className="font-bold sm:hidden">{tech.name.slice(0, 3)}</span>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
             </section>
 
             {/* ─── ABOUT ───────────────────────────────────────────────────────{/* SYSTEM.INFO */}
-            <section className="py-48 px-6 md:px-20 max-w-7xl mx-auto terminal-grid">
+            <section className="py-24 sm:py-32 md:py-48 px-4 sm:px-6 md:px-20 max-w-7xl mx-auto terminal-grid">
                 <motion.div
                     initial="initial"
                     whileInView="whileInView"
                     viewport={{ once: true, margin: "-100px" }}
                     variants={staggerContainer}
-                    className="flex flex-col md:flex-row justify-between items-start gap-16"
+                    className="flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-16"
                 >
-                    <motion.div variants={fadeUp} className="flex flex-col gap-6 md:w-1/3">
-                        <div className="border-2 border-green-500 bg-black px-5 py-3 font-mono">
-                            <div className="flex items-center gap-3">
-                                <span className="text-red-500">$</span>
-                                <span className="text-green-500">status</span>
-                                <span className="text-green-500 animate-pulse">_</span>
+                    <motion.div variants={fadeUp} className="flex flex-col gap-6 lg:w-1/3">
+                        <div className="border-2 border-green-500 bg-black px-4 sm:px-5 py-3 font-mono">
+                            <div className="flex items-center gap-2 sm:gap-3">
+                                <span className="text-red-500 text-sm">$</span>
+                                <span className="text-green-500 text-sm">status</span>
+                                <span className="text-green-500 text-sm animate-pulse">_</span>
                             </div>
-                            <div className="mt-2 text-green-500 text-sm">
+                            <div className="mt-2 text-green-500 text-xs sm:text-sm">
                                 {aboutData.availability.status} // {aboutData.availability.period}
                             </div>
                         </div>
                     </motion.div>
 
-                    <motion.div variants={fadeUp} className="md:w-2/3">
-                        <div className="font-mono text-2xl md:text-4xl leading-tight text-green-400 mb-6">
+                    <motion.div variants={fadeUp} className="lg:w-2/3">
+                        <div className="font-mono text-xl sm:text-2xl lg:text-4xl leading-tight text-green-400 mb-6">
                             <div className="text-red-500 glitch">&gt; {aboutData.heading}</div>
-                            <div className="text-blue-500 italic">{aboutData.headingItalic}</div>
+                            <div className="text-blue-500 italic text-lg sm:text-xl lg:text-2xl">{aboutData.headingItalic}</div>
                         </div>
-                        <div className="font-mono text-lg text-green-300 border-l-4 border-green-500 pl-6 scanlines">
+                        <div className="font-mono text-sm sm:text-base lg:text-lg text-green-300 border-l-4 border-green-500 pl-4 sm:pl-6 scanlines">
                             {aboutData.description}
                         </div>
                     </motion.div>
@@ -383,22 +386,25 @@ export default function Portfolio() {
             </section>
 
             {/* ─── WORK ────────────────────────────────────────────────────────            {/* DEPLOY.LOG */}
-            <section id="work" className="py-48 px-6 md:px-20 bg-black border-t-2 border-green-500 terminal-grid">
+            <section id="work" className="py-24 sm:py-32 md:py-48 px-4 sm:px-6 md:px-20 bg-black border-t-2 border-green-500 terminal-grid">
                 <div className="max-w-7xl mx-auto">
-                    <div className="mb-24 flex flex-col md:flex-row justify-between items-end gap-8">
-                        <div>
-                            <div className="flex items-center gap-4 mb-6">
-                                <span className="text-red-500 font-mono text-sm">$</span>
-                                <span className="text-green-500 font-mono text-sm">ls -la /deployments/</span>
-                                <span className="text-green-500 font-mono text-sm animate-pulse">_</span>
+                    <div className="mb-16 sm:mb-20 md:mb-24 flex flex-col lg:flex-row justify-between items-end gap-8">
+                        <div className="w-full lg:w-auto">
+                            <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6">
+                                <span className="text-red-500 font-mono text-xs sm:text-sm">$</span>
+                                <span className="text-green-500 font-mono text-xs sm:text-sm">ls -la /deployments/</span>
+                                <span className="text-green-500 font-mono text-xs sm:text-sm animate-pulse">_</span>
                             </div>
-                            <div className="font-mono text-3xl md:text-5xl text-green-400 glitch">
+                            <div className="font-mono text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-green-400 glitch leading-tight">
                                 &gt; DEPLOYED<br/>SYSTEMS
+                            </div>
+                            <div className="mt-4 text-green-500 font-mono text-sm opacity-70">
+                                <span className="text-red-500">[</span> {projectsData.length} active deployments <span className="text-red-500">]</span>
                             </div>
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
                         {projectsData.map((project) => (
                             <a key={project.id} href={project.link} target="_blank" rel="noopener noreferrer" className="block group">
                                 <motion.div
@@ -406,29 +412,30 @@ export default function Portfolio() {
                                     whileInView="whileInView"
                                     viewport={{ once: true, margin: "-50px" }}
                                     variants={fadeUp}
-                                    className="relative cursor-pointer block h-[500px] overflow-hidden border-2 border-green-500 bg-black transition-all duration-700 hover:border-red-500 hover:shadow-[0_0_30px_rgba(255,0,0,0.3)] group-hover:-translate-y-2"
+                                    className="relative cursor-pointer block h-80 sm:h-96 lg:h-112 overflow-hidden border-2 border-green-500 bg-black transition-all duration-700 hover:border-red-500 hover:shadow-[0_0_30px_rgba(255,0,0,0.3)] group-hover:-translate-y-2"
                                 >
                                     {/* Terminal header */}
-                                    <div className="absolute top-0 left-0 right-0 h-8 bg-black border-b-2 border-green-500 flex items-center gap-2 px-3 z-20">
-                                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                                        <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                        <span className="flex-1 text-center font-mono text-xs text-green-500">{project.title}.exe</span>
+                                    <div className="absolute top-0 left-0 right-0 h-6 sm:h-8 bg-black border-b-2 border-green-500 flex items-center gap-1 sm:gap-2 px-2 sm:px-3 z-20">
+                                        <div className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full"></div>
+                                        <div className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 rounded-full"></div>
+                                        <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full"></div>
+                                        <span className="flex-1 text-center font-mono text-xs text-green-500 truncate">{project.title}.exe</span>
                                     </div>
                                     
-                                    <img src={project.image} alt={project.title} className="absolute inset-8 w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110 opacity-80" />
+                                    <img src={project.image} alt={project.title} className="absolute inset-6 sm:inset-8 w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110 opacity-80" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-700 z-0" />
-                                    <div className="absolute bottom-4 left-4 right-4 p-6 border border-green-500 bg-black/80 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out z-10">
-                                        <div className="flex justify-between items-start mb-4">
-                                            <span className="border border-green-500 text-green-500 text-xs px-3 py-1 font-mono uppercase tracking-wider">{project.tag}</span>
-                                            <div className="w-8 h-8 border border-green-500 bg-black flex items-center justify-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 ease-out">
-                                                <ArrowRight size={14} className="text-green-500" />
+                                    <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 p-4 sm:p-6 border border-green-500 bg-black/80 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out z-10">
+                                        <div className="flex justify-between items-start mb-3 sm:mb-4">
+                                            <span className="border border-green-500 text-green-500 text-xs px-2 sm:px-3 py-1 font-mono uppercase tracking-wider whitespace-nowrap">{project.tag}</span>
+                                            <div className="w-6 h-6 sm:w-8 sm:h-8 border border-green-500 bg-black flex items-center justify-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 ease-out flex-shrink-0">
+                                                <ArrowRight size={12} className="text-green-500 sm:block hidden" />
+                                                <ArrowRight size={10} className="text-green-500 block sm:hidden" />
                                             </div>
                                         </div>
                                         <div>
-                                            <h3 className="text-xl text-green-400 mb-2 font-mono font-bold">{project.title}</h3>
+                                            <h3 className="text-lg sm:text-xl text-green-400 mb-2 font-mono font-bold leading-tight">{project.title}</h3>
                                             <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 ease-out">
-                                                <p className="overflow-hidden text-green-300 text-sm font-mono leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">{project.result}</p>
+                                                <p className="overflow-hidden text-green-300 text-xs sm:text-sm font-mono leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">{project.result}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -440,26 +447,26 @@ export default function Portfolio() {
             </section>
 
             {/* ─── PROCESS ─────────────────────────────────────────────────────{/* EXECUTION.PROTOCOL */}
-            <section className="py-48 px-6 md:px-20 max-w-7xl mx-auto terminal-grid overflow-hidden">
-                <div className="flex items-center gap-4 mb-6">
-                    <span className="text-red-500 font-mono text-sm">$</span>
-                    <span className="text-green-500 font-mono text-sm">cat protocol.txt</span>
-                    <span className="text-green-500 font-mono text-sm animate-pulse">_</span>
+            <section className="py-24 sm:py-32 md:py-48 px-4 sm:px-6 md:px-20 max-w-7xl mx-auto terminal-grid overflow-hidden">
+                <div className="flex items-center gap-2 sm:gap-4 mb-6">
+                    <span className="text-red-500 font-mono text-xs sm:text-sm">$</span>
+                    <span className="text-green-500 font-mono text-xs sm:text-sm">cat protocol.txt</span>
+                    <span className="text-green-500 font-mono text-xs sm:text-sm animate-pulse">_</span>
                 </div>
-                <div className="font-mono text-3xl md:text-5xl text-green-400 glitch mb-32">
+                <div className="font-mono text-2xl sm:text-3xl md:text-5xl text-green-400 glitch mb-20 sm:mb-24 md:mb-32">
                     &gt; EXECUTION<br/>PROTOCOL
                 </div>
                 <div className="relative">
                     <div className="hidden md:block absolute top-[30px] left-0 w-full h-1 bg-green-500"></div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 relative z-10">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 lg:gap-16 relative z-10">
                         {processData.map((step, i) => (
-                            <motion.div key={i} initial="initial" whileInView="whileInView" viewport={{ once: true }} variants={fadeUp} className="flex flex-col gap-8 group">
-                                <div className="w-16 h-16 border-2 border-green-500 bg-black flex items-center justify-center text-sm font-bold text-green-500 font-mono transition-all duration-500 group-hover:border-red-500 group-hover:bg-red-500 group-hover:text-black group-hover:scale-110 hover:shadow-[0_0_20px_rgba(255,0,0,0.5)]">
+                            <motion.div key={i} initial="initial" whileInView="whileInView" viewport={{ once: true }} variants={fadeUp} className="flex flex-col gap-6 sm:gap-8 group">
+                                <div className="w-12 h-12 sm:w-16 sm:h-16 border-2 border-green-500 bg-black flex items-center justify-center text-xs sm:text-sm font-bold text-green-500 font-mono transition-all duration-500 group-hover:border-red-500 group-hover:bg-red-500 group-hover:text-black group-hover:scale-110 hover:shadow-[0_0_20px_rgba(255,0,0,0.5)]">
                                     {step.num}
                                 </div>
                                 <div>
-                                    <h4 className="text-2xl text-green-400 mb-3 font-mono font-bold">{step.title}</h4>
-                                    <p className="text-green-300 leading-relaxed pr-8 font-mono text-sm border-l-4 border-green-500 pl-4">{step.desc}</p>
+                                    <h4 className="text-lg sm:text-xl lg:text-2xl text-green-400 mb-3 font-mono font-bold">{step.title}</h4>
+                                    <p className="text-green-300 leading-relaxed pr-4 sm:pr-8 font-mono text-xs sm:text-sm border-l-4 border-green-500 pl-3 sm:pl-4">{step.desc}</p>
                                 </div>
                             </motion.div>
                         ))}
@@ -467,24 +474,25 @@ export default function Portfolio() {
                 </div>
             </section>
 
-            {/* ─── TESTIMONIALS ────────────────────────────────────────────────{/* SYSTEM.LOGS */}
-            <section className="py-48 px-6 md:px-20 bg-black border-y-2 border-green-500 terminal-grid relative overflow-hidden">
-                <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 relative z-10">
+            {/* ─── TESTIMONIALS ──────────────────────────────────────────────── {/* SYSTEM.LOGS */}
+            <section className="py-24 sm:py-32 md:py-48 px-4 sm:px-6 md:px-20 bg-black border-y-2 border-green-500 terminal-grid relative overflow-hidden">
+                <div className="max-w-6xl mx-auto grid sm:grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-20 relative z-10">
                     {testimonialsData.map((quote) => (
-                        <motion.div key={quote.id} initial="initial" whileInView="whileInView" viewport={{ once: true }} variants={fadeUp} className="flex flex-col gap-6 border-2 border-green-500 bg-black p-8 transition-all hover:border-red-500 hover:shadow-[0_0_20px_rgba(255,0,0,0.3)]">
-                            <div className="flex items-center gap-4 mb-4">
-                                <span className="text-red-500 font-mono text-sm">$</span>
-                                <span className="text-green-500 font-mono text-sm">cat feedback.log</span>
-                                <span className="text-green-500 font-mono text-sm animate-pulse">_</span>
+                        <motion.div key={quote.id} initial="initial" whileInView="whileInView" viewport={{ once: true }} variants={fadeUp} className="flex flex-col gap-4 sm:gap-6 border-2 border-green-500 bg-black p-6 sm:p-8 transition-all hover:border-red-500 hover:shadow-[0_0_20px_rgba(255,0,0,0.3)]">
+                            <div className="flex items-center gap-2 sm:gap-4 mb-4">
+                                <span className="text-red-500 font-mono text-xs sm:text-sm">$</span>
+                                <span className="text-green-500 font-mono text-xs sm:text-sm">cat feedback.log</span>
+                                <span className="text-green-500 font-mono text-xs sm:text-sm animate-pulse">_</span>
                             </div>
-                            <div className="text-green-400 font-mono text-2xl mb-4">&gt;&gt;&gt;</div>
-                            <p className="text-lg md:text-xl text-green-300 font-mono leading-relaxed">"{quote.text}"</p>
-                            <div className="flex items-center gap-4 mt-auto pt-6 border-t border-green-500">
-                                <div className="w-12 h-12 border-2 border-green-500 bg-black flex items-center justify-center">
-                                    <CheckCircle2 size={20} className="text-green-500" />
+                            <div className="text-green-400 font-mono text-xl sm:text-2xl mb-4">&gt;&gt;&gt;</div>
+                            <p className="text-base sm:text-lg text-green-300 font-mono leading-relaxed">"{quote.text}"</p>
+                            <div className="flex items-center gap-3 sm:gap-4 mt-auto pt-4 sm:pt-6 border-t border-green-500">
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 border-2 border-green-500 bg-black flex items-center justify-center">
+                                    <CheckCircle2 size={16} className="text-green-500 sm:block hidden" />
+                                    <CheckCircle2 size={14} className="text-green-500 block sm:hidden" />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-sm font-mono font-bold text-green-400 uppercase tracking-wider">{quote.author}</span>
+                                    <span className="text-xs sm:text-sm font-mono font-bold text-green-400 uppercase tracking-wider">{quote.author}</span>
                                     <span className="text-xs font-mono text-green-500 uppercase tracking-wider mt-1">{quote.role}</span>
                                 </div>
                             </div>
@@ -493,31 +501,31 @@ export default function Portfolio() {
                 </div>
             </section>
 
-            {/* ─── CONTACT ─────────────────────────────────────────────────────{/* CONNECTION.PORT */}
-            <section className="py-48 px-6 md:px-20 text-center relative overflow-hidden terminal-grid">
-                <motion.div initial="initial" whileInView="whileInView" viewport={{ once: true }} variants={fadeUp} className="max-w-4xl mx-auto flex flex-col items-center gap-10">
-                    <div className="flex items-center gap-4 mb-6">
-                        <span className="text-red-500 font-mono text-sm">$</span>
-                        <span className="text-green-500 font-mono text-sm">nc -l 8080</span>
-                        <span className="text-green-500 font-mono text-sm animate-pulse">_</span>
+            {/* ─── CONTACT ───────────────────────────────────────────────────── {/* CONNECTION.PORT */}
+            <section className="py-24 sm:py-32 md:py-48 px-4 sm:px-6 md:px-20 text-center relative overflow-hidden terminal-grid">
+                <motion.div initial="initial" whileInView="whileInView" viewport={{ once: true }} variants={fadeUp} className="max-w-4xl mx-auto flex flex-col items-center gap-8 sm:gap-10">
+                    <div className="flex items-center gap-2 sm:gap-4 mb-6">
+                        <span className="text-red-500 font-mono text-xs sm:text-sm">$</span>
+                        <span className="text-green-500 font-mono text-xs sm:text-sm">nc -l 8080</span>
+                        <span className="text-green-500 font-mono text-xs sm:text-sm animate-pulse">_</span>
                     </div>
-                    <div className="font-mono text-[clamp(3rem,8vw,8rem)] font-black text-green-400 glitch leading-none">
+                    <div className="font-mono text-[clamp(2rem,10vw,6rem)] sm:text-[clamp(3rem,8vw,8rem)] font-black text-green-400 glitch leading-none">
                         {contactData.heading.split("\n").map((line, i) => (
                             <span key={i}>{line}{i !== contactData.heading.split("\n").length - 1 && <br />}</span>
                         ))}
                     </div>
-                    <p className="text-xl md:text-2xl text-green-300 font-mono mb-6 max-w-2xl leading-relaxed border-l-4 border-green-500 pl-6">{contactData.description}</p>
+                    <p className="text-base sm:text-lg md:text-xl text-green-300 font-mono mb-6 sm:mb-8 max-w-2xl leading-relaxed border-l-4 border-green-500 pl-4 sm:pl-6">{contactData.description}</p>
                     <MagneticButton
                         href={`mailto:${siteConfig.email}`}
-                        className="group relative overflow-hidden border-2 border-green-500 bg-black text-green-500 px-12 py-6 font-mono font-bold text-lg transition-all hover:bg-green-500 hover:text-black hover:shadow-[0_0_30px_rgba(0,255,0,0.5)] active:scale-[0.98]"
+                        className="group relative overflow-hidden border-2 border-green-500 bg-black text-green-500 px-8 sm:px-12 py-3 sm:py-6 font-mono font-bold text-sm sm:text-lg transition-all hover:bg-green-500 hover:text-black hover:shadow-[0_0_30px_rgba(0,255,0,0.5)] active:scale-[0.98]"
                     >
-                        <span className="relative flex items-center gap-3">
-                            {contactData.buttonText} <ArrowRight size={20} className="transform transition-transform group-hover:translate-x-1" />
+                        <span className="relative flex items-center gap-2 sm:gap-3">
+                            {contactData.buttonText} <ArrowRight size={16} className="transform transition-transform group-hover:translate-x-1" />
                         </span>
                     </MagneticButton>
-                    <div className="flex items-center gap-3 mt-8">
-                        <div className="w-3 h-3 bg-green-500 animate-pulse"></div>
-                        <p className="text-sm text-green-400 font-mono font-bold uppercase tracking-wider">{contactData.availability}</p>
+                    <div className="flex items-center gap-2 sm:gap-3 mt-6 sm:mt-8">
+                        <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 animate-pulse"></div>
+                        <p className="text-xs sm:text-sm text-green-400 font-mono font-bold uppercase tracking-wider">{contactData.availability}</p>
                     </div>
                 </motion.div>
             </section>
