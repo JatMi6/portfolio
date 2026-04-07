@@ -5,6 +5,14 @@ import { motion, Variants, useMotionValue, useSpring } from "framer-motion";
 import { ArrowRight, Quote, CheckCircle2, Database, Code2, Layout, Zap, Terminal } from "lucide-react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Sphere, MeshDistortMaterial } from "@react-three/drei";
+import CustomCursor from "@/src/components/CustomCursor";
+import BootSequence from "@/src/components/BootSequence";
+import TerminalLoader, { ProjectLoader } from "@/src/components/TerminalLoader";
+import LiveTerminal from "@/src/components/LiveTerminal";
+import CommandPalette from "@/src/components/CommandPalette";
+import InteractiveCode, { portfolioSnippets } from "@/src/components/InteractiveCode";
+import SystemMonitor, { LiveClock } from "@/src/components/SystemMonitor";
+import FileExplorer from "@/src/components/FileExplorer";
 
 import {
   heroData,
@@ -20,7 +28,13 @@ import { siteConfig } from "@/src/data/config";
 const ease = [0.25, 1, 0.5, 1] as [number, number, number, number];
 
 const fadeUp: Variants = {
-    initial: { opacity: 0, y: 40, filter: "blur(8px)" },
+  initial: { opacity: 0, y: 40, filter: "blur(8px)" },
+  whileInView: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 1.2, ease },
+  },
     whileInView: {
         opacity: 1,
         y: 0,
@@ -235,9 +249,53 @@ const Hero3D = () => (
 // ─── Main Export ───────────────────────────────────────────────────────────────
 export default function Portfolio() {
     const heroRef = useRef<HTMLElement>(null);
+    const [isBooting, setIsBooting] = useState(true);
+    const [projectsLoading, setProjectsLoading] = useState(true);
+    const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+
+    const handleBootComplete = () => {
+        setIsBooting(false);
+        // Instant project loading
+        setProjectsLoading(false);
+    };
+
+    // Keyboard shortcuts
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Ctrl+K or just K for command palette
+            if ((e.ctrlKey && e.key === 'k') || (e.key === 'k' && !e.ctrlKey && e.target === document.body)) {
+                e.preventDefault();
+                setCommandPaletteOpen(true);
+            }
+            // Escape to close command palette
+            if (e.key === 'Escape') {
+                setCommandPaletteOpen(false);
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
+    if (isBooting) {
+        return <BootSequence onComplete={handleBootComplete} />;
+    }
 
     return (
         <main className="bg-black min-h-screen text-green-500 font-mono selection:bg-green-500 selection:text-black overflow-x-hidden">
+            
+            {/* Command Palette */}
+            <CommandPalette isOpen={commandPaletteOpen} onClose={() => setCommandPaletteOpen(false)} />
+
+            {/* Floating Navigation Button */}
+            <button
+                onClick={() => setCommandPaletteOpen(true)}
+                className="fixed bottom-8 right-8 z-40 border-2 border-green-500 bg-black text-green-500 px-4 py-3 font-mono text-sm transition-all hover:bg-green-500 hover:text-black hover:shadow-[0_0_20px_rgba(0,255,0,0.5)] active:scale-[0.95] flex items-center gap-2"
+            >
+                <Terminal size={16} />
+                <span className="hidden sm:inline">Navigate</span>
+                <kbd className="text-xs border border-green-500 px-1">K</kbd>
+            </button>
 
             {/* HERO */}
             <section
@@ -292,9 +350,30 @@ export default function Portfolio() {
                     {/* Brutalist terminal heading */}
                     <motion.div variants={fadeUp}>
                         <div className="font-mono text-[clamp(2rem,12vw,6rem)] sm:text-[clamp(3rem,10vw,10rem)] font-black leading-none mb-6 sm:mb-8">
-                            <div className="text-red-500 animate-pulse sm:animate-none" style={{ textShadow: '0 0 2px #ff0000, 0 0 4px rgba(255,0,0,0.3)' }}>BREAK</div>
-                            <div className="text-green-500" style={{ textShadow: '0 0 2px #00ff00, 0 0 4px rgba(0,255,0,0.3)' }}>BUILD</div>
-                            <div className="text-blue-500" style={{ textShadow: '0 0 2px #0000ff, 0 0 4px rgba(0,0,255,0.3)' }}>DEPLOY</div>
+                            <motion.div 
+                                className="text-red-500"
+                                animate={{ opacity: [1, 0.7, 1] }}
+                                transition={{ duration: 3, repeat: Infinity }}
+                                style={{ textShadow: '0 0 2px #ff0000, 0 0 4px rgba(255,0,0,0.3)' }}
+                            >
+                                CREATE
+                            </motion.div>
+                            <motion.div 
+                                className="text-green-500"
+                                animate={{ scale: [1, 1.02, 1] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                                style={{ textShadow: '0 0 2px #00ff00, 0 0 4px rgba(0,255,0,0.3)' }}
+                            >
+                                DESIGN
+                            </motion.div>
+                            <motion.div 
+                                className="text-blue-500"
+                                animate={{ opacity: [1, 0.8, 1] }}
+                                transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1 }}
+                                style={{ textShadow: '0 0 2px #0000ff, 0 0 4px rgba(0,0,255,0.3)' }}
+                            >
+                                DEVELOP
+                            </motion.div>
                         </div>
                     </motion.div>
 
@@ -404,7 +483,12 @@ export default function Portfolio() {
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-                        {projectsData.map((project) => (
+                        {projectsLoading ? (
+                            <div className="col-span-full flex justify-center items-center py-20">
+                                <ProjectLoader />
+                            </div>
+                        ) : (
+                            projectsData.map((project) => (
                             <a key={project.id} href={project.link} target="_blank" rel="noopener noreferrer" className="block group">
                                 <motion.div
                                     initial="initial"
@@ -440,7 +524,8 @@ export default function Portfolio() {
                                     </div>
                                 </motion.div>
                             </a>
-                        ))}
+                        ))
+                        )}
                     </div>
                 </div>
             </section>
@@ -501,7 +586,7 @@ export default function Portfolio() {
             </section>
 
             {/* ─── CONTACT ───────────────────────────────────────────────────── {/* CONNECTION.PORT */}
-            <section className="py-24 sm:py-32 md:py-48 px-4 sm:px-6 md:px-20 text-center relative overflow-hidden terminal-grid">
+            <section id="contact" className="py-24 sm:py-32 md:py-48 px-4 sm:px-6 md:px-20 text-center relative overflow-hidden terminal-grid">
                 <motion.div initial="initial" whileInView="whileInView" viewport={{ once: true }} variants={fadeUp} className="max-w-4xl mx-auto flex flex-col items-center gap-8 sm:gap-10">
                     <div className="flex items-center gap-2 sm:gap-4 mb-6">
                         <span className="text-red-500 font-mono text-xs sm:text-sm">$</span>
@@ -528,6 +613,19 @@ export default function Portfolio() {
                     </div>
                 </motion.div>
             </section>
+
+            {/* Footer with Live Clock */}
+            <footer className="border-t-2 border-green-500 bg-black py-8 px-4 sm:px-6 md:px-20">
+                <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div className="text-green-600 font-mono text-sm">
+                        © {new Date().getFullYear()} Mijat Portfolio. Built with passion and code.
+                    </div>
+                    <LiveClock />
+                    <div className="text-green-600 font-mono text-xs">
+                        Available for projects · Let's create something amazing
+                    </div>
+                </div>
+            </footer>
         </main>
     );
 }

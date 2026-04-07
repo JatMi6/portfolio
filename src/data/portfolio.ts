@@ -1,21 +1,21 @@
 export const heroData = {
-  subtitle: "> SYSTEM.INIT",
-  mainHeading: "BREAK\nBUILD\nDEPLOY",
-  description: "Full-stack engineer who writes raw code, ships production systems, and turns complex problems into elegant solutions. No frameworks, no excuses.",
+  subtitle: "> MIJAT_GOLOVCEVAC",
+  mainHeading: "CREATE\nDESIGN\nDEVELOP",
+  description: "Creative Engineer & Full-Stack Developer crafting beautiful, functional digital experiences. From concept to deployment, I bring ideas to life with clean code and thoughtful design.",
   cta: {
-    text: "VIEW_REPO",
+    text: "SEE_MY_WORK",
     href: "#work",
   },
 };
 
 export const aboutData = {
   availability: {
-    status: "Available",
-    period: "Q3 2025",
+    status: "Available for projects",
+    period: "2024",
   },
-  heading: "I design and build in the same breath — no handoff, no translation loss, no",
-  headingItalic: '"the developer changed my design."',
-  description: "Startups and agencies hire me when they want a finished product, not a Figma file.",
+  heading: "I bridge the gap between design and development",
+  headingItalic: 'turning visions into interactive reality',
+  description: "Design that ships. I design and build production-ready web products for startups and agencies who need things to look great, work fast, and launch on time.",
 };
 
 export const skillsData = [
@@ -101,6 +101,6 @@ export const testimonialsData = [
 export const contactData = {
   heading: "Have a project in mind?",
   description: "I take on 1–2 projects per quarter to keep quality high. If the timing is right, let's talk.",
-  buttonText: "Send a brief",
+  buttonText: "mijatgolovcevac@gmail.com",
   availability: "Currently available · Responding within 24h",
 };
