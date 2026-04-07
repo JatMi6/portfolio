@@ -89,37 +89,51 @@ body {
   z-index: 1;
 }
 
-/* Custom cursor */
-* {
-  cursor: none !important;
+/* Custom cursor - only on non-touch devices */
+@media (hover: hover) {
+  * {
+    cursor: none !important;
+  }
+
+  .custom-cursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--foreground);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease, border-color 0.3s ease;
+    transform: translate(-50%, -50%);
+  }
+
+  .custom-cursor-dot {
+    width: 4px;
+    height: 4px;
+    background: var(--foreground);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+  }
+
+  .custom-cursor.hover {
+    transform: translate(-50%, -50%) scale(1.5);
+    border-color: var(--terminal-red);
+  }
 }
 
-.custom-cursor {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--foreground);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.1s ease, border-color 0.3s ease;
-  transform: translate(-50%, -50%);
-}
-
-.custom-cursor-dot {
-  width: 4px;
-  height: 4px;
-  background: var(--foreground);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-}
-
-.custom-cursor.hover {
-  transform: translate(-50%, -50%) scale(1.5);
-  border-color: var(--terminal-red);
+/* Hide custom cursor on touch devices */
+@media (pointer: coarse) {
+  .custom-cursor,
+  .custom-cursor-dot {
+    display: none !important;
+  }
+  
+  * {
+    cursor: auto !important;
+  }
 }
 
 /* Brutalist scrollbar */

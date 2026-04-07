@@ -15,8 +15,18 @@ export default function CustomCursor() {
   useEffect(() => {
     if (!isMounted) return;
 
+    // Check if device supports touch (mobile/tablet)
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Don't initialize custom cursor on touch devices
+    if (isTouchDevice) return;
+
     const updateCursorPosition = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      // Add small offset to center the cursor on the mouse position
+      setPosition({ 
+        x: e.clientX - 10, // Half of cursor width (20px / 2)
+        y: e.clientY - 10  // Half of cursor height (20px / 2)
+      });
     };
 
     const handleMouseEnter = (e: MouseEvent) => {

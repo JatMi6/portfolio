@@ -292,9 +292,9 @@ export default function Portfolio() {
                     {/* Brutalist terminal heading */}
                     <motion.div variants={fadeUp}>
                         <div className="font-mono text-[clamp(2rem,12vw,6rem)] sm:text-[clamp(3rem,10vw,10rem)] font-black leading-none mb-6 sm:mb-8">
-                            <div className="text-red-500 animate-pulse" style={{ textShadow: '0 0 10px #ff0000' }}>BREAK</div>
-                            <div className="text-green-500" style={{ textShadow: '0 0 10px #00ff00' }}>BUILD</div>
-                            <div className="text-blue-500" style={{ textShadow: '0 0 10px #0000ff' }}>DEPLOY</div>
+                            <div className="text-red-500 animate-pulse sm:animate-none" style={{ textShadow: '0 0 2px #ff0000, 0 0 4px rgba(255,0,0,0.3)' }}>BREAK</div>
+                            <div className="text-green-500" style={{ textShadow: '0 0 2px #00ff00, 0 0 4px rgba(0,255,0,0.3)' }}>BUILD</div>
+                            <div className="text-blue-500" style={{ textShadow: '0 0 2px #0000ff, 0 0 4px rgba(0,0,255,0.3)' }}>DEPLOY</div>
                         </div>
                     </motion.div>
 
@@ -342,8 +342,7 @@ export default function Portfolio() {
                             return (
                                 <div key={i} className="flex items-center gap-1 sm:gap-2 border border-green-500 px-2 sm:px-3 py-1 font-mono text-xs text-green-500 transition-all duration-300 hover:bg-green-500 hover:text-black hover:shadow-[0_0_15px_rgba(0,255,0,0.5)]">
                                     {iconMap[tech.icon]}
-                                    <span className="font-bold hidden sm:inline">{tech.name}</span>
-                                    <span className="font-bold sm:hidden">{tech.name.slice(0, 3)}</span>
+                                    <span className="font-bold">{tech.name}</span>
                                 </div>
                             );
                         })}

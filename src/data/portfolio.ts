@@ -56,7 +56,7 @@ export const projectsData = [
   },
   {
     id: "nikolassdesign",
-    title: "Nikola's Design",
+    title: "Nikolass Design",
     tag: "Portfolio",
     result: "A conversion-focused portfolio that positions a creative professional to attract higher-value clients.",
     image: "/projects/nikolassdesign.png",
