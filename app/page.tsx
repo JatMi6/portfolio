@@ -287,12 +287,11 @@ export default function Portfolio() {
             {/* Command Palette */}
             <CommandPalette isOpen={commandPaletteOpen} onClose={() => setCommandPaletteOpen(false)} />
 
-            {/* Floating Navigation Button */}
+            {/* Floating Navigation Button - Top */}
             <button
                 onClick={() => setCommandPaletteOpen(true)}
-                className="fixed bottom-8 right-8 z-40 border-2 border-green-500 bg-black text-green-500 px-4 py-3 font-mono text-sm transition-all hover:bg-green-500 hover:text-black hover:shadow-[0_0_20px_rgba(0,255,0,0.5)] active:scale-[0.95] flex items-center gap-2"
+                className="fixed top-8 right-8 z-40 border-2 border-green-500 bg-black text-green-500 px-4 py-3 font-mono text-sm transition-all hover:bg-green-500 hover:text-black hover:shadow-[0_0_20px_rgba(0,255,0,0.5)] active:scale-[0.95] flex items-center gap-2"
             >
-                <Terminal size={16} />
                 <span className="hidden sm:inline">Navigate</span>
                 <kbd className="text-xs border border-green-500 px-1">K</kbd>
             </button>
