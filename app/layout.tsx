@@ -20,6 +20,12 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.author }],
   creator: siteConfig.author,
   keywords: ["portfolio", "web design", "full-stack developer", "Next.js", "React", "TypeScript"],
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon-16x16.png',
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: '/site.webmanifest',
   openGraph: {
     type: openGraphData.type as any,
     locale: openGraphData.locale,
@@ -29,7 +35,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: `${siteConfig.url}/og-image.jpg`,
+        url: `${siteConfig.url}/opengraph-image`,
         width: 1200,
         height: 630,
         alt: siteConfig.name,
@@ -41,7 +47,7 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     creator: siteConfig.author,
-    images: [`${siteConfig.url}/og-image.jpg`],
+    images: [`${siteConfig.url}/opengraph-image`],
   },
   metadataBase: new URL(siteConfig.url),
 };

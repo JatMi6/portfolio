@@ -96,7 +96,14 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
       description: 'Email Mijat',
       icon: <Mail size={16} />,
       action: () => {
-        window.location.href = 'mailto:mijatgolovcevac@gmail.com';
+        try {
+          const emailLink = document.createElement('a');
+          emailLink.href = 'mailto:mijatgolovcevac@gmail.com';
+          emailLink.click();
+        } catch (error) {
+          // Fallback: try window.location
+          window.location.href = 'mailto:mijatgolovcevac@gmail.com';
+        }
         onClose();
       },
       keywords: ['mail', 'contact', 'message']
