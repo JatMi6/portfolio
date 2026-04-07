@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { siteConfig, openGraphData } from "@/src/data/config";
+import CustomCursor from "@/src/components/CustomCursor";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -55,7 +56,10 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col" suppressHydrationWarning>{children}</body>
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <CustomCursor />
+        {children}
+      </body>
     </html>
   );
 }

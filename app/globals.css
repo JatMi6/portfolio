@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #00ff00;
+  --terminal-red: #ff0000;
+  --terminal-blue: #0000ff;
+  --terminal-yellow: #ffff00;
 }
 
 @theme inline {
@@ -14,13 +17,168 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000000;
+    --foreground: #00ff00;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Courier New', monospace;
+  cursor: none;
+  overflow-x: hidden;
+}
+
+/* Brutalist terminal styles */
+* {
+  box-sizing: border-box;
+}
+
+/* Terminal grid background */
+.terminal-grid {
+  background-image: 
+    linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Glitch text effect */
+@keyframes glitch {
+  0%, 100% { text-shadow: 2px 0 #ff0000, -2px 0 #0000ff; }
+  25% { text-shadow: -2px 0 #ff0000, 2px 0 #0000ff; }
+  50% { text-shadow: 2px 0 #0000ff, -2px 0 #ff0000; }
+  75% { text-shadow: -2px 0 #0000ff, 2px 0 #ff0000; }
+}
+
+.glitch {
+  animation: glitch 2s infinite;
+}
+
+/* Terminal cursor blink */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.terminal-cursor::after {
+  content: '_';
+  animation: blink 1s infinite;
+  color: var(--foreground);
+}
+
+/* Scanline effect */
+.scanlines {
+  position: relative;
+  overflow: hidden;
+}
+
+.scanlines::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    transparent 50%,
+    rgba(0, 255, 0, 0.03) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Custom cursor */
+* {
+  cursor: none !important;
+}
+
+.custom-cursor {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--foreground);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease, border-color 0.3s ease;
+  transform: translate(-50%, -50%);
+}
+
+.custom-cursor-dot {
+  width: 4px;
+  height: 4px;
+  background: var(--foreground);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+.custom-cursor.hover {
+  transform: translate(-50%, -50%) scale(1.5);
+  border-color: var(--terminal-red);
+}
+
+/* Brutalist scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+  border: 1px solid var(--foreground);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--foreground);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--terminal-red);
+}
+
+/* Terminal selection */
+::selection {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* Brutalist button styles */
+.terminal-btn {
+  border: 2px solid var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
+  padding: 12px 24px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.terminal-btn:hover {
+  background: var(--foreground);
+  color: var(--background);
+  box-shadow: 0 0 20px var(--foreground);
+}
+
+.terminal-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--foreground), transparent);
+  transition: left 0.5s ease;
+}
+
+.terminal-btn:hover::before {
+  left: 100%;
 }

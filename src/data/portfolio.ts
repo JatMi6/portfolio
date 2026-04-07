@@ -1,9 +1,9 @@
 export const heroData = {
-  subtitle: "Creative Engineer",
-  mainHeading: "Design that ships.",
-  description: "I design and build production-ready web products for startups and agencies who need things to look great, work fast, and launch on time.",
+  subtitle: "> SYSTEM.INIT",
+  mainHeading: "BREAK\nBUILD\nDEPLOY",
+  description: "Full-stack engineer who writes raw code, ships production systems, and turns complex problems into elegant solutions. No frameworks, no excuses.",
   cta: {
-    text: "See selected work",
+    text: "VIEW_REPO",
     href: "#work",
   },
 };

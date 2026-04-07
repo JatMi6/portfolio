@@ -242,17 +242,30 @@ export default function Portfolio() {
             {/* ─── HERO ──────────────────────────────────────────────────────── */}
             <section
                 ref={heroRef}
-                className="relative min-h-screen flex flex-col justify-center px-6 md:px-20 pt-20 overflow-hidden"
+                className="relative min-h-screen flex flex-col justify-center px-6 md:px-20 pt-20 overflow-hidden bg-black"
             >
-                {/* Background radial — top left indigo */}
-                <div className="absolute top-[-15%] left-[-8%] w-[65vw] h-[65vw] rounded-full pointer-events-none"
-                    style={{ background: "radial-gradient(circle, rgba(79,70,229,0.18) 0%, rgba(99,102,241,0.06) 40%, transparent 65%)", filter: "blur(80px)" }} />
-                {/* Emerald accent — bottom right */}
-                <div className="absolute bottom-[-10%] right-[10%] w-[45vw] h-[45vw] rounded-full pointer-events-none"
-                    style={{ background: "radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 65%)", filter: "blur(100px)" }} />
-                {/* Purple mid accent */}
-                <div className="absolute top-[40%] left-[30%] w-[30vw] h-[30vw] rounded-full pointer-events-none"
-                    style={{ background: "radial-gradient(circle, rgba(139,92,246,0.07) 0%, transparent 70%)", filter: "blur(60px)" }} />
+                {/* Brutalist grid background */}
+                <div className="absolute inset-0 opacity-10">
+                    <div className="absolute inset-0" style={{
+                        backgroundImage: `
+                            linear-gradient(to right, #00ff00 1px, transparent 1px),
+                            linear-gradient(to bottom, #00ff00 1px, transparent 1px)
+                        `,
+                        backgroundSize: '50px 50px'
+                    }} />
+                </div>
+                
+                {/* Glitch effect overlays */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-red-500 animate-pulse" />
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
+                
+                {/* Terminal-style accent boxes */}
+                <div className="absolute top-10 left-10 border border-green-500 px-3 py-1 font-mono text-xs text-green-500 animate-pulse">
+                    $ ./init.sh
+                </div>
+                <div className="absolute bottom-10 right-10 border border-red-500 px-3 py-1 font-mono text-xs text-red-500">
+                    STATUS: ONLINE
+                </div>
 
                 {/* Cursor spotlight (stays within hero bounds) */}
                 <CursorSpotlight containerRef={heroRef as React.RefObject<HTMLElement>} />
@@ -268,65 +281,75 @@ export default function Portfolio() {
                     variants={staggerContainer}
                     className="max-w-6xl z-10"
                 >
-                    <motion.div variants={fadeUp} className="mb-6 flex items-center gap-3">
-                        <div className="h-[1px] w-8 bg-indigo-900" />
-                        <span className="text-xs uppercase tracking-[0.25em] font-medium text-indigo-400/80">
+                    <motion.div variants={fadeUp} className="mb-8 flex items-center gap-4">
+                        <div className="h-[2px] w-12 bg-green-500 animate-pulse" />
+                        <span className="text-sm font-mono uppercase tracking-widest text-green-500 font-bold">
                             {heroData.subtitle}
                         </span>
+                        <div className="h-[2px] w-12 bg-green-500 animate-pulse" />
                     </motion.div>
 
-                    {/* Clean word-by-word reveal heading */}
+                    {/* Brutalist terminal heading */}
                     <motion.div variants={fadeUp}>
-                        <RevealHeading text={heroData.mainHeading} />
+                        <div className="font-mono text-[clamp(3rem,10vw,10rem)] font-black leading-none mb-8">
+                            <div className="text-red-500 animate-pulse" style={{ textShadow: '0 0 10px #ff0000' }}>BREAK</div>
+                            <div className="text-green-500" style={{ textShadow: '0 0 10px #00ff00' }}>BUILD</div>
+                            <div className="text-blue-500" style={{ textShadow: '0 0 10px #0000ff' }}>DEPLOY</div>
+                        </div>
                     </motion.div>
 
                     <motion.p
                         variants={fadeUp}
-                        className="text-lg md:text-2xl text-zinc-400 font-light max-w-2xl mb-12 leading-relaxed tracking-tight"
+                        className="text-lg md:text-xl font-mono text-green-400 max-w-3xl mb-12 leading-relaxed border-l-4 border-green-500 pl-6"
+                        style={{ textShadow: '0 0 5px #00ff00' }}
                     >
                         {heroData.description}
                     </motion.p>
 
-                    {/* Magnetic CTA */}
+                    {/* Brutalist CTA */}
                     <motion.div variants={fadeUp}>
                         <MagneticButton
                             href={heroData.cta.href}
-                            className="group pointer-events-auto inline-flex items-center gap-4 bg-white text-black px-8 py-4 rounded-full font-medium tracking-wide transition-all duration-300 hover:bg-indigo-50 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:scale-[1.02] active:scale-[0.98]"
+                            className="group pointer-events-auto inline-flex items-center gap-4 border-2 border-green-500 bg-black text-green-500 px-8 py-4 font-mono font-bold tracking-widest transition-all duration-300 hover:bg-green-500 hover:text-black hover:shadow-[0_0_30px_rgba(0,255,0,0.5)] active:scale-[0.98]"
                         >
                             {heroData.cta.text}
                             <ArrowRight
                                 size={18}
-                                className="text-black transform transition-transform group-hover:translate-x-1"
+                                className="transform transition-transform group-hover:translate-x-1"
                             />
                         </MagneticButton>
                     </motion.div>
                 </motion.div>
             </section>
 
-            {/* ─── ECOSYSTEM BAR ─────────────────────────────────────────────── */}
-            <section className="border-y border-white/[0.02] bg-[#020510]/50 backdrop-blur-md">
-                <div className="px-6 md:px-20 py-8 flex flex-wrap items-center justify-between gap-8">
-                    <span className="text-xs uppercase tracking-widest font-semibold text-zinc-600 hidden md:block">Ecosystem</span>
+            {/* ─── ECOSYSTEM BAR ───────────────────────────────────────────────{/* SYSTEM_STACK BAR */}
+            <section className="border-y-2 border-green-500 bg-black terminal-grid">
+                <div className="px-6 md:px-20 py-8 flex flex-wrap items-center justify-between gap-8 scanlines">
+                    <div className="flex items-center gap-3">
+                        <span className="text-red-500 font-mono text-sm">$</span>
+                        <span className="text-green-500 font-mono text-sm font-bold">SYSTEM.STACK</span>
+                        <span className="text-green-500 font-mono text-sm animate-pulse">_</span>
+                    </div>
                     {skillsData.map((tech, i) => {
                         const iconMap: Record<string, React.ReactNode> = {
-                            Layout: <Layout size={18} />,
-                            Code2: <Code2 size={18} />,
-                            Zap: <Zap size={18} />,
-                            Database: <Database size={18} />,
-                            Terminal: <Terminal size={18} />,
+                            Layout: <Layout size={16} className="text-green-500" />,
+                            Code2: <Code2 size={16} className="text-green-500" />,
+                            Zap: <Zap size={16} className="text-green-500" />,
+                            Database: <Database size={16} className="text-green-500" />,
+                            Terminal: <Terminal size={16} className="text-green-500" />,
                         };
                         return (
-                            <div key={i} className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-zinc-500 opacity-60 transition-opacity duration-300 hover:opacity-100 hover:text-indigo-400 cursor-default">
+                            <div key={i} className="flex items-center gap-2 border border-green-500 px-3 py-1 font-mono text-xs text-green-500 transition-all duration-300 hover:bg-green-500 hover:text-black hover:shadow-[0_0_15px_rgba(0,255,0,0.5)]">
                                 {iconMap[tech.icon]}
-                                <span>{tech.name}</span>
+                                <span className="font-bold">{tech.name}</span>
                             </div>
                         );
                     })}
                 </div>
             </section>
 
-            {/* ─── ABOUT ─────────────────────────────────────────────────────── */}
-            <section className="py-48 px-6 md:px-20 max-w-7xl mx-auto">
+            {/* ─── ABOUT ───────────────────────────────────────────────────────{/* SYSTEM.INFO */}
+            <section className="py-48 px-6 md:px-20 max-w-7xl mx-auto terminal-grid">
                 <motion.div
                     initial="initial"
                     whileInView="whileInView"
@@ -335,68 +358,77 @@ export default function Portfolio() {
                     className="flex flex-col md:flex-row justify-between items-start gap-16"
                 >
                     <motion.div variants={fadeUp} className="flex flex-col gap-6 md:w-1/3">
-                        <div className="flex items-center gap-3 bg-white/[0.02] border border-white/5 w-fit px-5 py-2.5 rounded-full shadow-[0_0_15px_rgba(0,0,0,0.2)] backdrop-blur-sm transition-all hover:bg-white/[0.04]">
-                            <span className="relative flex h-2.5 w-2.5">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-50"></span>
-                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
-                            </span>
-                            <span className="text-xs uppercase tracking-[0.15em] font-medium text-zinc-300">
-                                {aboutData.availability.status} — {aboutData.availability.period}
-                            </span>
+                        <div className="border-2 border-green-500 bg-black px-5 py-3 font-mono">
+                            <div className="flex items-center gap-3">
+                                <span className="text-red-500">$</span>
+                                <span className="text-green-500">status</span>
+                                <span className="text-green-500 animate-pulse">_</span>
+                            </div>
+                            <div className="mt-2 text-green-500 text-sm">
+                                {aboutData.availability.status} // {aboutData.availability.period}
+                            </div>
                         </div>
                     </motion.div>
 
                     <motion.div variants={fadeUp} className="md:w-2/3">
-                        <p className="text-3xl md:text-5xl leading-[1.3] tracking-tight text-zinc-200 font-light">
-                            {aboutData.heading}{" "}
-                            <span className="text-indigo-400/80 italic font-medium">{aboutData.headingItalic}</span>
-                            <br /><br />
-                            <span className="text-xl md:text-2xl text-zinc-500 leading-relaxed block">
-                                {aboutData.description}
-                            </span>
-                        </p>
+                        <div className="font-mono text-2xl md:text-4xl leading-tight text-green-400 mb-6">
+                            <div className="text-red-500 glitch">&gt; {aboutData.heading}</div>
+                            <div className="text-blue-500 italic">{aboutData.headingItalic}</div>
+                        </div>
+                        <div className="font-mono text-lg text-green-300 border-l-4 border-green-500 pl-6 scanlines">
+                            {aboutData.description}
+                        </div>
                     </motion.div>
                 </motion.div>
             </section>
 
-            {/* ─── WORK ──────────────────────────────────────────────────────── */}
-            <section id="work" className="py-48 px-6 md:px-20 bg-gradient-to-b from-transparent to-[#050b1a] border-t border-white/[0.02]">
+            {/* ─── WORK ────────────────────────────────────────────────────────            {/* DEPLOY.LOG */}
+            <section id="work" className="py-48 px-6 md:px-20 bg-black border-t-2 border-green-500 terminal-grid">
                 <div className="max-w-7xl mx-auto">
                     <div className="mb-24 flex flex-col md:flex-row justify-between items-end gap-8">
                         <div>
-                            <p className="text-xs uppercase tracking-widest font-semibold text-indigo-500/80 mb-6 flex items-center gap-4">
-                                <span className="w-8 h-[1px] bg-indigo-900"></span>
-                                04 selected projects
-                            </p>
-                            <h2 className="text-5xl md:text-7xl font-semibold tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500">
-                                Work that earned <br /> its keep.
-                            </h2>
+                            <div className="flex items-center gap-4 mb-6">
+                                <span className="text-red-500 font-mono text-sm">$</span>
+                                <span className="text-green-500 font-mono text-sm">ls -la /deployments/</span>
+                                <span className="text-green-500 font-mono text-sm animate-pulse">_</span>
+                            </div>
+                            <div className="font-mono text-3xl md:text-5xl text-green-400 glitch">
+                                &gt; DEPLOYED<br/>SYSTEMS
+                            </div>
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {projectsData.map((project) => (
-                            <a key={project.id} href={project.link} target="_blank" rel="noopener noreferrer" className="block group perspective-1000">
+                            <a key={project.id} href={project.link} target="_blank" rel="noopener noreferrer" className="block group">
                                 <motion.div
                                     initial="initial"
                                     whileInView="whileInView"
                                     viewport={{ once: true, margin: "-50px" }}
                                     variants={fadeUp}
-                                    className="relative cursor-pointer block h-[550px] rounded-[2rem] overflow-hidden bg-[#030712] border border-white/5 transition-all duration-700 hover:border-indigo-500/30 hover:shadow-[0_0_40px_rgba(79,70,229,0.15)] group-hover:-translate-y-2"
+                                    className="relative cursor-pointer block h-[500px] overflow-hidden border-2 border-green-500 bg-black transition-all duration-700 hover:border-red-500 hover:shadow-[0_0_30px_rgba(255,0,0,0.3)] group-hover:-translate-y-2"
                                 >
-                                    <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110 opacity-70 group-hover:opacity-100" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#020510] via-[#020510]/40 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-700 z-0" />
-                                    <div className="absolute bottom-6 left-6 right-6 p-8 rounded-3xl bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out z-10">
-                                        <div className="flex justify-between items-start mb-6">
-                                            <span className="bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 text-xs px-4 py-1.5 rounded-full uppercase tracking-wider font-semibold">{project.tag}</span>
-                                            <div className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 ease-out">
-                                                <ArrowRight size={18} className="-rotate-45" />
+                                    {/* Terminal header */}
+                                    <div className="absolute top-0 left-0 right-0 h-8 bg-black border-b-2 border-green-500 flex items-center gap-2 px-3 z-20">
+                                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                                        <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                        <span className="flex-1 text-center font-mono text-xs text-green-500">{project.title}.exe</span>
+                                    </div>
+                                    
+                                    <img src={project.image} alt={project.title} className="absolute inset-8 w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110 opacity-80" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-700 z-0" />
+                                    <div className="absolute bottom-4 left-4 right-4 p-6 border border-green-500 bg-black/80 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out z-10">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <span className="border border-green-500 text-green-500 text-xs px-3 py-1 font-mono uppercase tracking-wider">{project.tag}</span>
+                                            <div className="w-8 h-8 border border-green-500 bg-black flex items-center justify-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 ease-out">
+                                                <ArrowRight size={14} className="text-green-500" />
                                             </div>
                                         </div>
                                         <div>
-                                            <h3 className="text-3xl text-zinc-100 mb-2 font-semibold tracking-tight">{project.title}</h3>
+                                            <h3 className="text-xl text-green-400 mb-2 font-mono font-bold">{project.title}</h3>
                                             <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 ease-out">
-                                                <p className="overflow-hidden text-zinc-400 text-base leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">{project.result}</p>
+                                                <p className="overflow-hidden text-green-300 text-sm font-mono leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">{project.result}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -407,24 +439,27 @@ export default function Portfolio() {
                 </div>
             </section>
 
-            {/* ─── PROCESS ───────────────────────────────────────────────────── */}
-            <section className="py-48 px-6 md:px-20 max-w-7xl mx-auto overflow-hidden">
-                <p className="text-xs uppercase tracking-widest font-semibold text-indigo-500/80 mb-6 flex items-center gap-4">
-                    <span className="w-8 h-[1px] bg-indigo-900"></span>
-                    Working together
-                </p>
-                <h2 className="text-5xl md:text-7xl font-semibold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 tracking-tighter mb-32">
-                    No surprises. <br /> No disappearing acts.
-                </h2>
+            {/* ─── PROCESS ─────────────────────────────────────────────────────{/* EXECUTION.PROTOCOL */}
+            <section className="py-48 px-6 md:px-20 max-w-7xl mx-auto terminal-grid overflow-hidden">
+                <div className="flex items-center gap-4 mb-6">
+                    <span className="text-red-500 font-mono text-sm">$</span>
+                    <span className="text-green-500 font-mono text-sm">cat protocol.txt</span>
+                    <span className="text-green-500 font-mono text-sm animate-pulse">_</span>
+                </div>
+                <div className="font-mono text-3xl md:text-5xl text-green-400 glitch mb-32">
+                    &gt; EXECUTION<br/>PROTOCOL
+                </div>
                 <div className="relative">
-                    <div className="hidden md:block absolute top-[30px] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent" />
+                    <div className="hidden md:block absolute top-[30px] left-0 w-full h-1 bg-green-500"></div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 relative z-10">
                         {processData.map((step, i) => (
                             <motion.div key={i} initial="initial" whileInView="whileInView" viewport={{ once: true }} variants={fadeUp} className="flex flex-col gap-8 group">
-                                <div className="w-16 h-16 rounded-full bg-[#0a1128] border border-indigo-500/20 flex items-center justify-center text-sm font-bold text-indigo-400 transition-all duration-500 group-hover:border-indigo-400 group-hover:bg-indigo-500/10 group-hover:scale-110 shadow-[0_0_30px_rgba(79,70,229,0)] group-hover:shadow-[0_0_30px_rgba(79,70,229,0.15)]">{step.num}</div>
+                                <div className="w-16 h-16 border-2 border-green-500 bg-black flex items-center justify-center text-sm font-bold text-green-500 font-mono transition-all duration-500 group-hover:border-red-500 group-hover:bg-red-500 group-hover:text-black group-hover:scale-110 hover:shadow-[0_0_20px_rgba(255,0,0,0.5)]">
+                                    {step.num}
+                                </div>
                                 <div>
-                                    <h4 className="text-2xl text-zinc-100 mb-3 font-semibold tracking-tight">{step.title}</h4>
-                                    <p className="text-zinc-500 leading-relaxed pr-8">{step.desc}</p>
+                                    <h4 className="text-2xl text-green-400 mb-3 font-mono font-bold">{step.title}</h4>
+                                    <p className="text-green-300 leading-relaxed pr-8 font-mono text-sm border-l-4 border-green-500 pl-4">{step.desc}</p>
                                 </div>
                             </motion.div>
                         ))}
@@ -432,20 +467,25 @@ export default function Portfolio() {
                 </div>
             </section>
 
-            {/* ─── TESTIMONIALS ──────────────────────────────────────────────── */}
-            <section className="py-48 px-6 md:px-20 bg-gradient-to-b from-[#050b1a] to-[#020510] border-y border-white/[0.02] relative overflow-hidden">
+            {/* ─── TESTIMONIALS ────────────────────────────────────────────────{/* SYSTEM.LOGS */}
+            <section className="py-48 px-6 md:px-20 bg-black border-y-2 border-green-500 terminal-grid relative overflow-hidden">
                 <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 relative z-10">
                     {testimonialsData.map((quote) => (
-                        <motion.div key={quote.id} initial="initial" whileInView="whileInView" viewport={{ once: true }} variants={fadeUp} className="flex flex-col gap-10 bg-white/[0.01] p-10 md:p-14 rounded-[2rem] border border-white/5 transition-all hover:bg-white/[0.02] hover:border-white/10">
-                            <Quote className="text-indigo-900" size={48} strokeWidth={2} />
-                            <p className="text-xl md:text-2xl text-zinc-300 font-light leading-relaxed tracking-wide">"{quote.text}"</p>
-                            <div className="flex items-center gap-5 mt-auto pt-6">
-                                <div className="w-12 h-12 rounded-full bg-[#0a1128] flex items-center justify-center border border-indigo-500/20">
-                                    <CheckCircle2 size={20} className="text-indigo-400" />
+                        <motion.div key={quote.id} initial="initial" whileInView="whileInView" viewport={{ once: true }} variants={fadeUp} className="flex flex-col gap-6 border-2 border-green-500 bg-black p-8 transition-all hover:border-red-500 hover:shadow-[0_0_20px_rgba(255,0,0,0.3)]">
+                            <div className="flex items-center gap-4 mb-4">
+                                <span className="text-red-500 font-mono text-sm">$</span>
+                                <span className="text-green-500 font-mono text-sm">cat feedback.log</span>
+                                <span className="text-green-500 font-mono text-sm animate-pulse">_</span>
+                            </div>
+                            <div className="text-green-400 font-mono text-2xl mb-4">&gt;&gt;&gt;</div>
+                            <p className="text-lg md:text-xl text-green-300 font-mono leading-relaxed">"{quote.text}"</p>
+                            <div className="flex items-center gap-4 mt-auto pt-6 border-t border-green-500">
+                                <div className="w-12 h-12 border-2 border-green-500 bg-black flex items-center justify-center">
+                                    <CheckCircle2 size={20} className="text-green-500" />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-sm uppercase tracking-widest font-semibold text-zinc-200">{quote.author}</span>
-                                    <span className="text-xs uppercase tracking-widest font-medium text-zinc-600 mt-1.5">{quote.role}</span>
+                                    <span className="text-sm font-mono font-bold text-green-400 uppercase tracking-wider">{quote.author}</span>
+                                    <span className="text-xs font-mono text-green-500 uppercase tracking-wider mt-1">{quote.role}</span>
                                 </div>
                             </div>
                         </motion.div>
@@ -453,29 +493,31 @@ export default function Portfolio() {
                 </div>
             </section>
 
-            {/* ─── CONTACT ───────────────────────────────────────────────────── */}
-            <section className="py-48 px-6 md:px-20 text-center relative overflow-hidden">
+            {/* ─── CONTACT ─────────────────────────────────────────────────────{/* CONNECTION.PORT */}
+            <section className="py-48 px-6 md:px-20 text-center relative overflow-hidden terminal-grid">
                 <motion.div initial="initial" whileInView="whileInView" viewport={{ once: true }} variants={fadeUp} className="max-w-4xl mx-auto flex flex-col items-center gap-10">
-                    <h2 className="text-[clamp(3rem,8vw,8rem)] font-semibold text-transparent bg-clip-text bg-gradient-to-br from-white to-zinc-500 tracking-tighter leading-none">
+                    <div className="flex items-center gap-4 mb-6">
+                        <span className="text-red-500 font-mono text-sm">$</span>
+                        <span className="text-green-500 font-mono text-sm">nc -l 8080</span>
+                        <span className="text-green-500 font-mono text-sm animate-pulse">_</span>
+                    </div>
+                    <div className="font-mono text-[clamp(3rem,8vw,8rem)] font-black text-green-400 glitch leading-none">
                         {contactData.heading.split("\n").map((line, i) => (
                             <span key={i}>{line}{i !== contactData.heading.split("\n").length - 1 && <br />}</span>
                         ))}
-                    </h2>
-                    <p className="text-xl md:text-2xl text-zinc-400 font-light mb-6 max-w-2xl leading-relaxed">{contactData.description}</p>
+                    </div>
+                    <p className="text-xl md:text-2xl text-green-300 font-mono mb-6 max-w-2xl leading-relaxed border-l-4 border-green-500 pl-6">{contactData.description}</p>
                     <MagneticButton
                         href={`mailto:${siteConfig.email}`}
-                        className="group relative overflow-hidden bg-white text-black px-12 py-6 rounded-full font-semibold text-lg transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_40px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(255,255,255,0.2)]"
+                        className="group relative overflow-hidden border-2 border-green-500 bg-black text-green-500 px-12 py-6 font-mono font-bold text-lg transition-all hover:bg-green-500 hover:text-black hover:shadow-[0_0_30px_rgba(0,255,0,0.5)] active:scale-[0.98]"
                     >
                         <span className="relative flex items-center gap-3">
                             {contactData.buttonText} <ArrowRight size={20} className="transform transition-transform group-hover:translate-x-1" />
                         </span>
                     </MagneticButton>
-                    <div className="flex items-center gap-3 mt-8 opacity-80">
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
-                        </span>
-                        <p className="text-xs text-zinc-400 font-semibold uppercase tracking-widest">{contactData.availability}</p>
+                    <div className="flex items-center gap-3 mt-8">
+                        <div className="w-3 h-3 bg-green-500 animate-pulse"></div>
+                        <p className="text-sm text-green-400 font-mono font-bold uppercase tracking-wider">{contactData.availability}</p>
                     </div>
                 </motion.div>
             </section>
