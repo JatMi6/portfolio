@@ -64,7 +64,7 @@ export default function StaticOgImage() {
             }}
           >
             <span style={{ color: '#ff0000' }}>MIJAT</span>
-            <span style={{ color: '#00ff00' }}> GOLOVCEVAC</span>
+            <span style={{ color: '#00ff00' }}> GOLOČEVAC</span>
           </div>
 
           {/* Tagline */}
@@ -121,7 +121,7 @@ export default function StaticOgImage() {
             opacity: 0.6,
           }}
         >
-          mijatgolovcevac.com
+          mijat.dev
         </div>
 
         {/* Blinking Cursor */}

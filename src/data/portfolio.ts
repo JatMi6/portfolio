@@ -1,5 +1,5 @@
 export const heroData = {
-  subtitle: "> MIJAT_GOLOVCEVAC",
+  subtitle: "> MIJAT_GOLOCEVAC",
   mainHeading: "CREATE\nDESIGN\nDEVELOP",
   description: "Creative Engineer & Full-Stack Developer crafting beautiful, functional digital experiences. From concept to deployment, I bring ideas to life with clean code and thoughtful design.",
   cta: {
@@ -101,6 +101,6 @@ export const testimonialsData = [
 export const contactData = {
   heading: "Have a project in mind?",
   description: "I take on 1–2 projects per quarter to keep quality high. If the timing is right, let's talk.",
-  buttonText: "mijatgolovcevac@gmail.com",
+  buttonText: "mijatgolocevac@gmail.com",
   availability: "Currently available · Responding within 24h",
 };

@@ -28,6 +28,7 @@ export default function Image() {
           backgroundSize: '50px 50px',
           fontFamily: 'monospace',
           color: '#00ff00',
+          position: 'relative',
         }}
       >
         {/* Terminal Header */}
@@ -38,6 +39,7 @@ export default function Image() {
             left: '40px',
             fontSize: '24px',
             color: '#ff0000',
+            display: 'flex',
           }}
         >
           $ ./portfolio.sh
@@ -61,10 +63,11 @@ export default function Image() {
               marginBottom: '20px',
               textShadow: '0 0 10px #00ff00',
               letterSpacing: '-2px',
+              display: 'flex',
             }}
           >
             <span style={{ color: '#ff0000' }}>MIJAT</span>
-            <span style={{ color: '#00ff00' }}> GOLOVCEVAC</span>
+            <span style={{ color: '#00ff00' }}> GOLOČEVAC</span>
           </div>
 
           {/* Tagline */}
@@ -74,6 +77,7 @@ export default function Image() {
               marginBottom: '30px',
               color: '#00ff00',
               opacity: 0.8,
+              display: 'flex',
             }}
           >
             Creative Engineer & Full-Stack Developer
@@ -88,6 +92,7 @@ export default function Image() {
               borderRadius: '8px',
               backgroundColor: 'rgba(0, 255, 0, 0.05)',
               marginBottom: '40px',
+              display: 'flex',
             }}
           >
             <span style={{ color: '#ff0000' }}>$</span> CREATE DESIGN DEVELOP
@@ -119,9 +124,10 @@ export default function Image() {
             fontSize: '20px',
             color: '#00ff00',
             opacity: 0.6,
+            display: 'flex',
           }}
         >
-          mijatgolovcevac.com
+          mijat.dev
         </div>
 
         {/* Blinking Cursor */}
@@ -132,7 +138,7 @@ export default function Image() {
             left: '40px',
             fontSize: '24px',
             color: '#00ff00',
-            animation: 'blink 1s infinite',
+            display: 'flex',
           }}
         >
           _

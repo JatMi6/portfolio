@@ -4,7 +4,7 @@ export const siteConfig = {
   description: "Design that ships. I design and build production-ready web products for startups and agencies who need things to look great, work fast, and launch on time.",
   author: "Mijat Golovčevac",
   email: "mijatgolocevac@gmail.com",
-  url: "https://portfolio.com",
+  url: process.env.NODE_ENV === 'production' ? "https://mijat.dev" : "http://localhost:3000",
   locale: "en-US",
   
   // Social links (optional)

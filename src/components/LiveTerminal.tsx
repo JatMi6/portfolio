@@ -37,7 +37,7 @@ export default function LiveTerminal({ className = '' }: LiveTerminalProps) {
     },
     about: {
       description: 'Learn about Mijat',
-      action: () => `Hi! I'm Mijat Golovcevac, a Creative Engineer & Full-Stack Developer.
+      action: () => `Hi! I'm Mijat Goločevac, a Creative Engineer & Full-Stack Developer.
 I design and build production-ready web products for startups and agencies.
 My focus is on creating things that look great, work fast, and launch on time.
 Let's build something amazing together!`
@@ -63,7 +63,7 @@ Let's build something amazing together!`
     contact: {
       description: 'Get in touch',
       action: () => `Let's connect!
-  Email: mijatgolovcevac@gmail.com
+  Email: mijatgolocevac@gmail.com
   GitHub: github.com/JatMi6
   Instagram: @mijat_golocevac
   Available for freelance projects

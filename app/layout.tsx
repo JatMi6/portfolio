@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: `${siteConfig.url}/og-image-static`,
+        url: `${siteConfig.url}/opengraph-image`,
         width: 1200,
         height: 630,
         alt: siteConfig.name,
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     creator: siteConfig.author,
-    images: [`${siteConfig.url}/og-image-static`],
+    images: [`${siteConfig.url}/opengraph-image`],
   },
   metadataBase: new URL(siteConfig.url),
 };

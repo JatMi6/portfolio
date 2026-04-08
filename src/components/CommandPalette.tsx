@@ -98,11 +98,11 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
       action: () => {
         try {
           const emailLink = document.createElement('a');
-          emailLink.href = 'mailto:mijatgolovcevac@gmail.com';
+          emailLink.href = 'mailto:mijatgolocevac@gmail.com';
           emailLink.click();
         } catch (error) {
           // Fallback: try window.location
-          window.location.href = 'mailto:mijatgolovcevac@gmail.com';
+          window.location.href = 'mailto:mijatgolocevac@gmail.com';
         }
         onClose();
       },
