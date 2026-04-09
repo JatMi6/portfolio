@@ -1,10 +1,10 @@
 export const siteConfig = {
-  name: "Mijat Golovčevac",
+  name: "Mijat Goločevac",
   title: "Creative Engineer & Full-Stack Developer | Portfolio",
   description: "Design that ships. I design and build production-ready web products for startups and agencies who need things to look great, work fast, and launch on time.",
-  author: "Mijat Golovčevac",
+  author: "Mijat Goločevac",
   email: "mijatgolocevac@gmail.com",
-  url: process.env.NODE_ENV === 'production' ? "https://mijat.dev" : "http://localhost:3000",
+  url: "https://mijat.dev",
   locale: "en-US",
   
   // Social links (optional)
@@ -32,6 +32,6 @@ export const openGraphData = {
   type: "website",
   locale: "en_US",
   image: "/og-image/og-image.png",
-  imageAlt: "Mijat Golovcevac - Creative Engineer & Full-Stack Developer",
-  siteName: "Mijat Golovcevac Portfolio",
+  imageAlt: "Mijat Golocevac - Creative Engineer & Full-Stack Developer",
+  siteName: "Mijat Goločevac Portfolio",
 };

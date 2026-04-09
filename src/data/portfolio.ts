@@ -1,6 +1,6 @@
 export const heroData = {
 
-  subtitle: "> MIJAT_GOLOVCEVAC",
+  subtitle: "> MIJAT_GOLOCEVAC",
 
   mainHeading: "CREATE\nDESIGN\nDEVELOP",
 
@@ -204,7 +204,7 @@ export const contactData = {
 
   description: "I take on 1–2 projects per quarter to keep quality high. If the timing is right, let's talk.",
 
-  buttonText: "mijatgolovcevac@gmail.com",
+  buttonText: "mijatgolocevac@gmail.com",
 
   availability: "Currently available · Responding within 24h",
 
