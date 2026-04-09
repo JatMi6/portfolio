@@ -31,5 +31,7 @@ export const siteConfig = {
 export const openGraphData = {
   type: "website",
   locale: "en_US",
-  image: "/og-image.jpg",
+  image: "/og-image/og-image.png",
+  imageAlt: "Mijat Golovcevac - Creative Engineer & Full-Stack Developer",
+  siteName: "Mijat Golovcevac Portfolio",
 };
