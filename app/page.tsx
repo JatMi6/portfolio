@@ -13,6 +13,7 @@ import CommandPalette from "@/src/components/CommandPalette";
 import InteractiveCode, { portfolioSnippets } from "@/src/components/InteractiveCode";
 import SystemMonitor, { LiveClock } from "@/src/components/SystemMonitor";
 import FileExplorer from "@/src/components/FileExplorer";
+import HeroM3D from "@/src/components/HeroM3D";
 
 import {
   heroData,
@@ -174,7 +175,7 @@ function CursorSpotlight({ containerRef }: { containerRef: React.RefObject<HTMLE
         <>
             {/* Primary glow */}
             <motion.div
-                className="pointer-events-none absolute z-[1]"
+                className="pointer-events-none absolute z-[1] hidden sm:block"
                 style={{
                     left: springX,
                     top: springY,
@@ -190,7 +191,7 @@ function CursorSpotlight({ containerRef }: { containerRef: React.RefObject<HTMLE
             />
             {/* Sharp inner dot */}
             <motion.div
-                className="pointer-events-none absolute z-[2]"
+                className="pointer-events-none absolute z-[2] hidden sm:block"
                 style={{
                     left: springX,
                     top: springY,
@@ -217,28 +218,6 @@ function CursorSpotlight({ containerRef }: { containerRef: React.RefObject<HTMLE
         </>
     );
 }
-
-// ─── 3D Komponenta ─────────────────────────────────────────────────────────────
-const Hero3D = () => (
-    <div className="absolute inset-0 z-0 opacity-40 pointer-events-auto mix-blend-screen">
-        <Canvas camera={{ position: [0, 0, 3] }}>
-            <ambientLight intensity={0.2} />
-            <directionalLight position={[1, 2, 3]} intensity={1.5} color="#4f46e5" />
-            <directionalLight position={[-1, -2, -3]} intensity={0.5} color="#10b981" />
-            <Sphere args={[1, 100, 100]} scale={1.4}>
-                <MeshDistortMaterial
-                    color="#0a1930"
-                    attach="material"
-                    distort={0.4}
-                    speed={2}
-                    roughness={0.1}
-                    metalness={0.8}
-                />
-            </Sphere>
-            <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.8} />
-        </Canvas>
-    </div>
-);
 
 // ─── Main Export ───────────────────────────────────────────────────────────────
 export default function Portfolio() {
@@ -325,8 +304,9 @@ export default function Portfolio() {
                 <CursorSpotlight containerRef={heroRef as React.RefObject<HTMLElement>} />
 
                 {/* 3D sphere (right side) */}
-                <div className="absolute right-[-10%] sm:right-[-5%] top-[10%] w-[70vw] sm:w-[55vw] h-[70vw] sm:h-[55vw] pointer-events-none">
-                    <Hero3D />
+                <div
+                    className="absolute right-[-10%] sm:right-[-5%] top-[10%] w-[70vw] sm:w-[55vw] h-[70vw] sm:h-[55vw]">
+                    <HeroM3D className="w-full h-full"/>
                 </div>
 
                 <motion.div
