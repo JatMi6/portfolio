@@ -1,19 +1,28 @@
 "use client";
 
 import React, { useRef, useCallback, useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { motion, Variants, useMotionValue, useSpring } from "framer-motion";
-import { ArrowRight, Quote, CheckCircle2, Database, Code2, Layout, Zap, Terminal } from "lucide-react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Sphere, MeshDistortMaterial } from "@react-three/drei";
-import CustomCursor from "@/src/components/CustomCursor";
+import { ArrowRight, CheckCircle2, Database, Code2, Layout, Zap, Terminal } from "lucide-react";
 import BootSequence from "@/src/components/BootSequence";
-import TerminalLoader, { ProjectLoader } from "@/src/components/TerminalLoader";
-import LiveTerminal from "@/src/components/LiveTerminal";
+import { ProjectLoader } from "@/src/components/TerminalLoader";
 import CommandPalette from "@/src/components/CommandPalette";
-import InteractiveCode, { portfolioSnippets } from "@/src/components/InteractiveCode";
-import SystemMonitor, { LiveClock } from "@/src/components/SystemMonitor";
-import FileExplorer from "@/src/components/FileExplorer";
-import HeroM3D from "@/src/components/HeroM3D";
+import { LiveClock } from "@/src/components/LiveClock";
+
+const HeroM3D = dynamic(() => import("@/src/components/HeroM3D"), {
+    ssr: false,
+    loading: () => (
+        <div className="h-full min-h-[12rem] w-full bg-transparent" aria-hidden />
+    ),
+});
+
+const SKILL_ICONS: Record<string, React.ReactNode> = {
+    Layout: <Layout size={14} className="text-green-500" />,
+    Code2: <Code2 size={14} className="text-green-500" />,
+    Zap: <Zap size={14} className="text-green-500" />,
+    Database: <Database size={14} className="text-green-500" />,
+    Terminal: <Terminal size={14} className="text-green-500" />,
+};
 
 import {
   heroData,
@@ -29,12 +38,11 @@ import { siteConfig } from "@/src/data/config";
 const ease = [0.25, 1, 0.5, 1] as [number, number, number, number];
 
 const fadeUp: Variants = {
-  initial: { opacity: 0, y: 40, filter: "blur(8px)" },
+  initial: { opacity: 0, y: 36 },
   whileInView: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 1.2, ease },
+    transition: { duration: 0.9, ease },
   },
 };
 
@@ -42,7 +50,7 @@ const staggerContainer: Variants = {
     initial: { opacity: 0 },
     whileInView: {
         opacity: 1,
-        transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+        transition: { staggerChildren: 0.18, delayChildren: 0.14 },
     },
 };
 
@@ -92,54 +100,6 @@ function MagneticButton({ children, href, className }: {
         >
             {children}
         </motion.a>
-    );
-}
-
-// ─── Word-by-word reveal heading ─────────────────────────────────────────────
-const wordVariant: Variants = {
-    initial: { opacity: 0, y: 60, filter: "blur(12px)" },
-    animate: (i: number) => ({
-        opacity: 1,
-        y: 0,
-        filter: "blur(0px)",
-        transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.05 * i },
-    }),
-};
-
-function RevealHeading({ text }: { text: string }) {
-    // Split into lines, then words, track global word index for stagger delay
-    const lines = text.split("\n");
-    let globalIdx = 0;
-
-    return (
-        <h1 className="text-[clamp(3.5rem,8vw,8rem)] font-semibold leading-[0.92] tracking-tighter mb-8 select-none">
-            {lines.map((line, li) => {
-                const words = line.split(" ");
-                return (
-                    <span key={li} className="block overflow-hidden">
-                        {words.map((word, wi) => {
-                            const idx = globalIdx++;
-                            return (
-                                <span key={wi} className="inline-block overflow-hidden mr-[0.22em] last:mr-0">
-                                    <motion.span
-                                        className="inline-block text-transparent bg-clip-text"
-                                        style={{
-                                            backgroundImage: "linear-gradient(160deg, #ffffff 30%, #52525b 100%)",
-                                        }}
-                                        custom={idx}
-                                        initial="initial"
-                                        animate="animate"
-                                        variants={wordVariant}
-                                    >
-                                        {word}
-                                    </motion.span>
-                                </span>
-                            );
-                        })}
-                    </span>
-                );
-            })}
-        </h1>
     );
 }
 
@@ -386,21 +346,12 @@ export default function Portfolio() {
                         <span className="text-green-500 font-mono text-xs sm:text-sm animate-pulse">_</span>
                     </div>
                     <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-                        {skillsData.map((tech, i) => {
-                            const iconMap: Record<string, React.ReactNode> = {
-                                Layout: <Layout size={14} className="text-green-500" />,
-                                Code2: <Code2 size={14} className="text-green-500" />,
-                                Zap: <Zap size={14} className="text-green-500" />,
-                                Database: <Database size={14} className="text-green-500" />,
-                                Terminal: <Terminal size={14} className="text-green-500" />,
-                            };
-                            return (
+                        {skillsData.map((tech, i) => (
                                 <div key={i} className="flex items-center gap-1 sm:gap-2 border border-green-500 px-2 sm:px-3 py-1 font-mono text-xs text-green-500 transition-all duration-300 hover:bg-green-500 hover:text-black hover:shadow-[0_0_15px_rgba(0,255,0,0.5)]">
-                                    {iconMap[tech.icon]}
+                                    {SKILL_ICONS[tech.icon]}
                                     <span className="font-bold">{tech.name}</span>
                                 </div>
-                            );
-                        })}
+                            ))}
                     </div>
                 </div>
             </section>
@@ -481,7 +432,14 @@ export default function Portfolio() {
                                         <span className="flex-1 text-center font-mono text-xs text-green-500 truncate">{project.title}.exe</span>
                                     </div>
                                     
-                                    <img src={project.image} alt={project.title} className="absolute inset-6 sm:inset-8 w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110 opacity-80" />
+                                    <img
+                                        src={project.image}
+                                        alt={project.title}
+                                        loading="lazy"
+                                        decoding="async"
+                                        fetchPriority="low"
+                                        className="absolute inset-6 sm:inset-8 h-full w-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110 opacity-80"
+                                    />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-700 z-0" />
                                     <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 p-4 sm:p-6 border border-green-500 bg-black/80 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out z-10">
                                         <div className="flex justify-between items-start mb-3 sm:mb-4">

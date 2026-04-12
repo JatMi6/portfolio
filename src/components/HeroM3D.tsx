@@ -7,9 +7,7 @@
  *   npm install @react-three/fiber @react-three/drei @react-three/postprocessing three
  *   npm install --save-dev @types/three
  *
- * Font: downloads automatically from threejs.org CDN.
- * For production, copy helvetiker_bold.typeface.json into /public/fonts/
- * and change FONT_URL to "/fonts/helvetiker_bold.typeface.json"
+ * Font: served from /public/fonts/helvetiker_bold.typeface.json (same-origin, cacheable).
  *
  * Usage (drop into your portfolio hero section):
  *   <HeroM3D className="absolute right-[-10%] sm:right-[-5%] top-[10%]
@@ -20,6 +18,8 @@ import React, {
     useRef,
     useCallback,
     Suspense,
+    useState,
+    useEffect,
 } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Text3D, Center } from "@react-three/drei";
@@ -28,8 +28,7 @@ import * as THREE from "three";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const FONT_URL =
-    "https://threejs.org/examples/fonts/helvetiker_bold.typeface.json";
+const FONT_URL = "/fonts/helvetiker_bold.typeface.json";
 
 /** How strongly mouse position maps to rotation (radians) */
 const ROTATION_STRENGTH = 0.32;
@@ -51,6 +50,8 @@ interface MouseState {
     y: number;
     /** Whether the cursor is currently inside the canvas */
     active: boolean;
+    /** OS “reduce motion” — lighter scene, no bloom */
+    reducedMotion: boolean;
 }
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -89,9 +90,10 @@ function AnimatedM({
         groupRef.current.rotation.x = rot.current.x;
         groupRef.current.rotation.y = rot.current.y;
 
-        // ── Idle float ────────────────────────────────────────────────────────
+        // ── Idle float (disabled when user prefers reduced motion) ────────────
+        const floatAmp = mouseRef.current.reducedMotion ? 0 : FLOAT_AMP;
         groupRef.current.position.y =
-            Math.sin(time.current * FLOAT_SPEED) * FLOAT_AMP;
+            Math.sin(time.current * FLOAT_SPEED) * floatAmp;
     });
 
     return (
@@ -102,12 +104,12 @@ function AnimatedM({
                     font={FONT_URL}
                     size={1.75}
                     height={0.38}
-                    curveSegments={20}
+                    curveSegments={12}
                     bevelEnabled
                     bevelThickness={0.035}
                     bevelSize={0.025}
                     bevelOffset={0}
-                    bevelSegments={10}
+                    bevelSegments={4}
                 >
                     M
                     <meshStandardMaterial
@@ -157,8 +159,10 @@ function AnimatedM({
  */
 function Scene({
                    mouseRef,
+                   reducedMotion,
                }: {
     mouseRef: React.MutableRefObject<MouseState>;
+    reducedMotion: boolean;
 }) {
     return (
         <>
@@ -190,16 +194,18 @@ function Scene({
                 <AnimatedM mouseRef={mouseRef} />
             </Suspense>
 
-            {/* ── Post-processing ──────────────────────────────────────────────── */}
-            <EffectComposer>
-                <Bloom
-                    intensity={1.2}
-                    luminanceThreshold={0.2}
-                    luminanceSmoothing={0.85}
-                    mipmapBlur
-                    radius={0.75}
-                />
-            </EffectComposer>
+            {/* ── Post-processing (skipped for reduced motion — cheaper GPU) ─── */}
+            {!reducedMotion && (
+                <EffectComposer>
+                    <Bloom
+                        intensity={1.05}
+                        luminanceThreshold={0.22}
+                        luminanceSmoothing={0.8}
+                        mipmapBlur={false}
+                        radius={0.55}
+                    />
+                </EffectComposer>
+            )}
         </>
     );
 }
@@ -213,7 +219,56 @@ interface HeroM3DProps {
 
 export default function HeroM3D({ className }: HeroM3DProps) {
     const containerRef = useRef<HTMLDivElement>(null);
-    const mouseRef = useRef<MouseState>({ x: 0, y: 0, active: false });
+    const mouseRef = useRef<MouseState>({
+        x: 0,
+        y: 0,
+        active: false,
+        reducedMotion: false,
+    });
+    const [reducedMotion, setReducedMotion] = useState(false);
+    const [frameLoop, setFrameLoop] = useState<"always" | "never">("always");
+    const inViewRef = useRef(true);
+
+    useEffect(() => {
+        const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const sync = () => {
+            const v = mq.matches;
+            setReducedMotion(v);
+            mouseRef.current.reducedMotion = v;
+        };
+        sync();
+        mq.addEventListener("change", sync);
+        return () => mq.removeEventListener("change", sync);
+    }, []);
+
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+
+        const applyLoop = () => {
+            setFrameLoop(
+                inViewRef.current && !document.hidden ? "always" : "never"
+            );
+        };
+
+        const io = new IntersectionObserver(
+            ([entry]) => {
+                inViewRef.current = entry.isIntersecting;
+                applyLoop();
+            },
+            { root: null, rootMargin: "120px", threshold: 0 }
+        );
+        io.observe(el);
+
+        const onVis = () => applyLoop();
+        document.addEventListener("visibilitychange", onVis);
+        applyLoop();
+
+        return () => {
+            io.disconnect();
+            document.removeEventListener("visibilitychange", onVis);
+        };
+    }, []);
 
     /** Update normalised mouse coords relative to the canvas */
     const handleMouseMove = useCallback(
@@ -243,13 +298,18 @@ export default function HeroM3D({ className }: HeroM3DProps) {
             }}
         >
             <Canvas
-                gl={{ antialias: true, alpha: true }}
+                gl={{
+                    antialias: !reducedMotion,
+                    alpha: true,
+                    powerPreference: "high-performance",
+                }}
                 camera={{ position: [0, 0, 5.5], fov: 46 }}
-                dpr={[1, 2]}
+                dpr={1}
+                frameloop={frameLoop}
                 onPointerDown={(e) => e.stopPropagation()}
                 style={{ background: "transparent" }}
             >
-                <Scene mouseRef={mouseRef} />
+                <Scene mouseRef={mouseRef} reducedMotion={reducedMotion} />
             </Canvas>
         </div>
     );

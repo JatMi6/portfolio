@@ -3,19 +3,17 @@
 import React from "react";
 import { motion, Variants } from "framer-motion";
 import { ArrowRight, CheckCircle2, Database, Code2, Layout, Zap, Terminal } from "lucide-react";
-import CustomCursor from "@/src/components/CustomCursor";
 import CommandPalette from "@/src/components/CommandPalette";
 import { useState, useEffect } from "react";
 
 const ease = [0.25, 1, 0.5, 1] as [number, number, number, number];
 
 const fadeUp: Variants = {
-  initial: { opacity: 0, y: 40, filter: "blur(8px)" },
+  initial: { opacity: 0, y: 36 },
   whileInView: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 1.2, ease },
+    transition: { duration: 0.9, ease },
   },
 };
 
@@ -24,8 +22,8 @@ const staggerContainer: Variants = {
   whileInView: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
+      staggerChildren: 0.16,
+      delayChildren: 0.22,
     },
   },
 };
@@ -50,8 +48,6 @@ export default function About() {
 
   return (
     <main className="bg-black min-h-screen text-green-500 font-mono selection:bg-green-500 selection:text-black overflow-x-hidden">
-      <CustomCursor />
-      
       {/* Command Palette */}
       <CommandPalette isOpen={commandPaletteOpen} onClose={() => setCommandPaletteOpen(false)} />
 
