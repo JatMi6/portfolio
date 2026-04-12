@@ -24,7 +24,7 @@ export const aboutData = {
 
     status: "Available for projects",
 
-    period: "2025",
+    period: "2026",
 
   },
 
@@ -88,7 +88,7 @@ export const projectsData = [
 
     link: "https://cocrafts.rs",
 
-    year: "2024",
+    year: "2025",
 
   },
 
@@ -106,7 +106,7 @@ export const projectsData = [
 
     link: "https://wama.vercel.app",
 
-    year: "2024",
+    year: "2026",
 
   },
 
@@ -124,7 +124,7 @@ export const projectsData = [
 
     link: "https://nikolassdesign.com",
 
-    year: "2023",
+    year: "2026",
 
   },
 
